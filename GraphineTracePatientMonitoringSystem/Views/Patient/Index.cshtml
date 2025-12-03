@@ -1,4 +1,7 @@
-﻿@{
+﻿@model GraphineTracePatientMonitoringSystem.Models.PatientDashboardViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Patient Dashboard";
 }
 
@@ -48,27 +51,52 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <h5 class="mb-0">Patient Analysis – Pressure Map (32×32 grid)</h5>
-                        <span class="badge bg-danger">ALERT</span>
+
+                        @if (Model.HasHighPressureAlert)
+                        {
+                            <span class="badge bg-danger">ALERT</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">OK</span>
+                        }
                     </div>
+
                     <p class="text-muted small mb-3">
-                        High pressure region detected in last 10 minutes.
+                        @Model.AlertMessage
                     </p>
 
                     <div class="row">
                         <div class="col-md-8">
-                            <!-- Heat map placeholder -->
+                            <!-- Heat map -->
                             <div class="heatmap-wrapper">
                                 <div class="heatmap-grid">
-                                    @for (int row = 0; row < 8; row++)
+                                    @for (int row = 0; row < 32; row++)
                                     {
-                                        for (int col = 0; col < 8; col++)
+                                        for (int col = 0; col < 32; col++)
                                         {
-                                            <div class="heat-cell"></div>
+                                            int value = Model.HeatMapValues[row, col];
+
+                                            string levelClass;
+                                            if (value < 100)
+                                            {
+                                                levelClass = "heat-low";
+                                            }
+                                            else if (value < 180)
+                                            {
+                                                levelClass = "heat-medium";
+                                            }
+                                            else
+                                            {
+                                                levelClass = "heat-high";
+                                            }
+
+                                            <div class="heat-cell @levelClass" title="@value"></div>
                                         }
                                     }
                                 </div>
                                 <div class="text-center small text-muted mt-2">
-                                    Represents 32×32 pressure sensor heat map
+                                    Each cell = 1 pressure sensor (1–255). 32×32 matrix.
                                 </div>
                             </div>
                         </div>
@@ -76,15 +104,15 @@
                         <div class="col-md-4">
                             <div class="metric-card mb-2">
                                 <span class="metric-label">Peak Pressure Index</span>
-                                <span class="metric-value">8.7</span>
+                                <span class="metric-value">@Model.PeakPressureIndex</span>
                             </div>
                             <div class="metric-card mb-2">
                                 <span class="metric-label">Contact Area %</span>
-                                <span class="metric-value">67.3</span>
+                                <span class="metric-value">@Model.ContactAreaPercent%</span>
                             </div>
                             <div class="metric-card mb-2">
                                 <span class="metric-label">Max Pressure Value</span>
-                                <span class="metric-value">142</span>
+                                <span class="metric-value">@Model.MaxPressureValue</span>
                             </div>
                         </div>
                     </div>

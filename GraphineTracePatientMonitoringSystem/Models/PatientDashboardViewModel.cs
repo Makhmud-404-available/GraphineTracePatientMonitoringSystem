@@ -1,18 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace GraphineTracePatientMonitoringSystem.Models
 {
+    // Simple view model for the main patient dashboard
     public class PatientDashboardViewModel
     {
-        public Patient Patient { get; set; } = null!;
+        // 32x32 heat map values (1–255)
+        public int[,] HeatMapValues { get; set; }
 
-        // Last pressure / ulcer check summary
-        public UlcerCheckResult LastUlcerCheck { get; set; } = null!;
+        public double PeakPressureIndex { get; set; }
+        public double ContactAreaPercent { get; set; }
+        public int MaxPressureValue { get; set; }
 
-        // Recent alerts to show in a small list/card
-        public List<Alert> RecentAlerts { get; set; } = new();
+        public bool HasHighPressureAlert { get; set; }
+        public string AlertMessage { get; set; }
 
-        // Recent clinician reviews / recommendations (if you want to show them)
-        public List<ClinicianReview> RecentReviews { get; set; } = new();
+        public PatientDashboardViewModel()
+        {
+            // Always create the 32x32 matrix
+            HeatMapValues = new int[32, 32];
+            AlertMessage = "";
+        }
     }
 }

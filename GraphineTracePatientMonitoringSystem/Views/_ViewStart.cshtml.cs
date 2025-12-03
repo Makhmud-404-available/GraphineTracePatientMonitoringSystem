@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace GraphineTracePatientMonitoringSystem.Views.Patient
+namespace GraphineTracePatientMonitoringSystem.Views
 {
-    public class SettingsModel : PageModel
+    public class _ViewStartModel : PageModel
     {
         public void OnGet()
         {

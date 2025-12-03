@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace GraphineTracePatientMonitoringSystem.Models
+﻿namespace GraphineTracePatientMonitoringSystem.Models
 {
     public class PatientPressureAnalysisViewModel
     {

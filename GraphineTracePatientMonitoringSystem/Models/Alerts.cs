@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GraphineTracePatientMonitoringSystem.Models
+﻿namespace GraphineTracePatientMonitoringSystem.Models
 {
     public class Alert
     {
