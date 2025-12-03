@@ -1,0 +1,180 @@
+﻿@model GraphineTracePatientMonitoringSystem.Models.PatientDashboardViewModel
+@await Html.PartialAsync("_PatientSidebar")
+
+@{
+    ViewData["Title"] = "Patient Dashboard";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- LEFT: sidebar tabs -->
+        <div class="col-md-3 mb-3">
+            @await Html.PartialAsync("_PatientSidebar")
+        </div>
+
+        <!-- RIGHT: main dashboard content -->
+        <div class="col-md-9">
+            <!-- Header: patient info -->
+            <div class="row mb-3">
+                <div class="col-md-8">
+                    <h2>Patient Dashboard</h2>
+                    <p class="text-muted">
+                        Monitoring pressure ulcer risk and recent alerts for
+                        <strong>@Model.Patient.FullName</strong>.
+                    </p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div><strong>Age:</strong> @Model.Patient.Age</div>
+                    <div><strong>Room:</strong> @Model.Patient.RoomNumber</div>
+                    <div><strong>Status:</strong> @Model.Patient.CurrentHealthStatus</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- MAIN: Heatmap + last ulcer check -->
+                <div class="col-lg-8 mb-4">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-header">
+                            <strong>Pressure Heat Map</strong>
+                            <span class="d-block small text-muted">Last 24 hours (example layout)</span>
+                        </div>
+                        <div class="card-body">
+                            <p class="small text-muted">
+                                Darker / red cells mean the patient stayed longer in that area → higher ulcer risk.
+                            </p>
+
+                            <div class="heatmap-grid mb-2">
+                                <!-- Simple static grid — later you can link to real data -->
+                                <!-- Row 1 -->
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-safe"></div></div>
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-safe"></div></div>
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-medium"></div></div>
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-medium"></div></div>
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-high"></div></div>
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-high"></div></div>
+
+                                <!-- Row 2 -->
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-safe"></div></div>
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-safe"></div></div>
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-medium"></div></div>
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-high"></div></div>
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-high"></div></div>
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-high"></div></div>
+
+                                <!-- Row 3 -->
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-safe"></div></div>
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-medium"></div></div>
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-medium"></div></div>
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-high"></div></div>
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-high"></div></div>
+                                <div class="heatmap-cell"><div class="heatmap-cell-inner heatmap-critical"></div></div>
+                            </div>
+
+                            <div class="small">
+                                <span class="legend-box heatmap-safe"></span> Safe &nbsp;
+                                <span class="legend-box heatmap-medium"></span> Medium &nbsp;
+                                <span class="legend-box heatmap-high"></span> High &nbsp;
+                                <span class="legend-box heatmap-critical"></span> Critical
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Last ulcer check info -->
+                    <div class="card shadow-sm">
+                        <div class="card-header">
+                            Latest Ulcer Risk Check (last hour)
+                        </div>
+                        <div class="card-body">
+                            @if (Model.LastUlcerCheck != null)
+                            {
+                                <p>
+                                    <strong>Checked at:</strong>
+                                    @Model.LastUlcerCheck.CheckTime.ToString("g")
+                                </p>
+                                <p>
+                                    <strong>Risk level:</strong>
+                                    @Model.LastUlcerCheck.RiskLevel
+                                </p>
+                                <p>@Model.LastUlcerCheck.Notes</p>
+                            }
+                            else
+                            {
+                                <p>No ulcer risk checks recorded in the last hour.</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SIDE: Alerts + review summary -->
+                <div class="col-lg-4 mb-4">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Recent Alerts
+                        </div>
+                        <div class="card-body small">
+                            @if (Model.RecentAlerts.Count == 0)
+                            {
+                                <p>No alerts for this patient.</p>
+                            }
+                            else
+                            {
+                                <ul class="list-unstyled mb-0">
+                                    @foreach (var alert in Model.RecentAlerts)
+                                    {
+                                        <li class="mb-2">
+                                            <span class="badge bg-@GetSeverityClass(alert.Severity)">
+                                                @alert.Severity
+                                            </span>
+                                            @alert.Timestamp.ToString("g") — @alert.Message
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            Your Clinician Review
+                        </div>
+                        <div class="card-body small">
+                            @if (Model.RecentReviews.Count == 0)
+                            {
+                                <p>You have not added a review yet.</p>
+                            }
+                            else
+                            {
+                                var review = Model.RecentReviews[0];
+                                <p>
+                                    <strong>Rating:</strong> @review.Rating / 5
+                                </p>
+                                <p>@review.Comment</p>
+                                <p class="text-muted">@review.CreatedAt.ToString("g")</p>
+                            }
+
+                            <a asp-controller="Patient" asp-action="ReviewClinician"
+                               class="btn btn-sm btn-primary mt-2">
+                                Add / Edit Review
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    // Helper to map severity to Bootstrap badge colour
+    private string GetSeverityClass(string severity)
+    {
+        return severity switch
+        {
+            "Critical" => "danger",
+            "High" => "danger",
+            "Medium" => "warning text-dark",
+            "Low" => "success",
+            _ => "secondary"
+        };
+    }
+}

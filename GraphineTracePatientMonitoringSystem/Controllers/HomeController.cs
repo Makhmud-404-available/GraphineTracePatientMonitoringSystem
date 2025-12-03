@@ -1,32 +1,14 @@
-using System.Diagnostics;
-using GraphineTracePatientMonitoringSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GraphineTracePatientMonitoringSystem.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
+        // When user goes to / or /Home/Index,
+        // send them straight to the Patient Dashboard.
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return RedirectToAction("Index", "Patient");
         }
     }
 }

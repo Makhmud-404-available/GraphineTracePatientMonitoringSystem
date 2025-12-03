@@ -1,0 +1,29 @@
+@page
+@model GraphineTracePatientMonitoringSystem.Pages.Report.IndexModel
+
+<h2>Patient Report</h2>
+
+<div>
+    <h3>@Model.ModelData.Patient.FullName (Room @Model.ModelData.Patient.RoomNumber)</h3>
+    <p>Report date: @Model.ModelData.ReportDate.ToShortDateString()</p>
+
+    <h4>Latest Ulcer Check</h4>
+    @if (Model.ModelData.LatestUlcerCheck is null)
+    {
+        <p>No ulcer check recorded.</p>
+    }
+    else
+    {
+        <p>Checked: @Model.ModelData.LatestUlcerCheck.CheckTime</p>
+        <p>Risk: @Model.ModelData.LatestUlcerCheck.RiskLevel</p>
+        <p>Notes: @Model.ModelData.LatestUlcerCheck.Notes</p>
+    }
+
+    <h4>Recent Alerts</h4>
+    <ul>
+    @foreach (var a in Model.ModelData.Alerts)
+    {
+        <li>@a.Timestamp - @a.Type (@a.Severity): @a.Message</li>
+    }
+    </ul>
+</div>

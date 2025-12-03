@@ -1,0 +1,30 @@
+@page
+@model GraphineTracePatientMonitoringSystem.Pages.Alerts.IndexModel
+
+<h2>Alerts</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Time</th>
+            <th>Patient</th>
+            <th>Type</th>
+            <th>Severity</th>
+            <th>Message</th>
+            <th>Ack</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var a in Model.Alerts)
+    {
+        <tr>
+            <td>@a.Timestamp</td>
+            <td>@a.PatientId</td>
+            <td>@a.Type</td>
+            <td>@a.Severity</td>
+            <td>@a.Message</td>
+            <td>@(a.IsAcknowledged ? "Yes" : "No")</td>
+        </tr>
+    }
+    </tbody>
+</table>

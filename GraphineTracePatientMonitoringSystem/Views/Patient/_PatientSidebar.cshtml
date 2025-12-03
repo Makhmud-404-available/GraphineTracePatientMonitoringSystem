@@ -1,0 +1,30 @@
+﻿@{
+    var active = ViewData["ActiveSection"] as string ?? "";
+}
+
+<div class="d-flex flex-column align-items-center pt-4 pb-4"
+     style="width:70px; background-color:#ffffff; border-radius:16px;">
+    <a asp-controller="Patient" asp-action="Index"
+       class="mb-4 btn btn-light @(active == "Dashboard" ? "border border-dark" : "")"
+       title="Dashboard">
+        ⬛
+    </a>
+
+    <a asp-controller="Patient" asp-action="PressureAnalysis"
+       class="mb-4 btn btn-light @(active == "Analysis" ? "border border-dark" : "")"
+       title="Pressure analysis">
+        🕒
+    </a>
+
+    <a asp-controller="Patient" asp-action="ReviewClinician"
+       class="mb-4 btn btn-light @(active == "Comments" ? "border border-dark" : "")"
+       title="Comments">
+        💬
+    </a>
+
+    <a asp-controller="Patient" asp-action="Alerts"
+       class="mb-4 btn btn-light @(active == "Alerts" ? "border border-dark" : "")"
+       title="Alerts">
+        🔔
+    </a>
+</div>
