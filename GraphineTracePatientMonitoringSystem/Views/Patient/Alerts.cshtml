@@ -1,49 +1,47 @@
-﻿@model List<GraphineTracePatientMonitoringSystem.Models.Alert>
-
-@{
+﻿@{
     ViewData["Title"] = "Alerts";
 }
 
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-3 mb-3">
-            @await Html.PartialAsync("_PatientSidebar")
-        </div>
+<div class="gt-frame">
+    <h2 class="page-title">Alerts</h2>
 
-        <div class="col-md-9">
-            <h2>Alerts</h2>
-            <p class="text-muted">All recent pressure and movement alerts for this patient.</p>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="badge bg-success">Status: Normal</span>
+        <span class="text-muted small">Pressure</span>
+    </div>
 
-            @if (Model.Count == 0)
-            {
-                <p>No alerts recorded.</p>
-            }
-            else
-            {
-                <table class="table table-striped table-sm">
-                    <thead>
-                        <tr>
-                            <th>Time</th>
-                            <th>Type</th>
-                            <th>Severity</th>
-                            <th>Message</th>
-                            <th>Acknowledged</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var alert in Model)
-                        {
-                            <tr>
-                                <td>@alert.Timestamp.ToString("g")</td>
-                                <td>@alert.Type</td>
-                                <td>@alert.Severity</td>
-                                <td>@alert.Message</td>
-                                <td>@(alert.IsAcknowledged ? "Yes" : "No")</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            }
+    <div class="card gt-card">
+        <div class="card-body">
+
+            <h5 class="mb-3">Recent Alerts</h5>
+
+            <div class="alert-card alert-high mb-2">
+                <div class="alert-icon">⚠️</div>
+                <div class="alert-content">
+                    <div class="alert-time">Nov 4, 10:12 AM</div>
+                    <div class="alert-title">High blood pressure detected</div>
+                    <div class="alert-text">Please take BP reading now.</div>
+                </div>
+            </div>
+
+            <div class="alert-card alert-medium mb-2">
+                <div class="alert-icon">⏱</div>
+                <div class="alert-content">
+                    <div class="alert-time">Nov 3, 9:30 PM</div>
+                    <div class="alert-title">No movement detected for 3 hours</div>
+                    <div class="alert-text">Please adjust your position.</div>
+                </div>
+            </div>
+
+            <div class="alert-card alert-normal">
+                <div class="alert-icon">✅</div>
+                <div class="alert-content">
+                    <div class="alert-time">Nov 3, 6:00 PM</div>
+                    <div class="alert-title">Pressure returned to safe range</div>
+                    <div class="alert-text">Monitoring continues.</div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

@@ -1,63 +1,79 @@
-﻿@model GraphineTracePatientMonitoringSystem.Models.PatientPressureAnalysisViewModel
-@await Html.PartialAsync("PatientSidebar")
-@{
+﻿@{
     ViewData["Title"] = "Patient Pressure Analysis";
 }
 
-<div class="container-fluid p-4">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-auto">
-            @await Html.PartialAsync("_PatientSidebar")
+<div class="gt-frame">
+    <h2 class="page-title">Patient Pressure Analysis</h2>
+
+    <div class="card gt-card mb-4">
+        <div class="card-body">
+            <table class="table table-sm align-middle">
+                <thead>
+                    <tr>
+                        <th>Date/Time</th>
+                        <th>Metric</th>
+                        <th>Value</th>
+                        <th>Risk Level</th>
+                        <th>Body area</th>
+                        <th>Comments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nov 4, 2024</td>
+                        <td>Blood Pressure</td>
+                        <td>145/95 mmHg</td>
+                        <td><span class="badge bg-danger">High</span></td>
+                        <td>Morning</td>
+                        <td><a href="#">Add note</a></td>
+                    </tr>
+                    <tr>
+                        <td>Nov 4, 2024</td>
+                        <td>Heart Rate</td>
+                        <td>88 bpm</td>
+                        <td><span class="badge bg-warning text-dark">Elevated</span></td>
+                        <td>Morning</td>
+                        <td><a href="#">Add note</a></td>
+                    </tr>
+                    <tr>
+                        <td>Nov 3, 2024</td>
+                        <td>Blood Pressure</td>
+                        <td>138/88 mmHg</td>
+                        <td><span class="badge bg-danger">High</span></td>
+                        <td>Evening</td>
+                        <td><a href="#">Add note</a></td>
+                    </tr>
+                    <tr>
+                        <td>Nov 3, 2024</td>
+                        <td>Oxygen Level</td>
+                        <td>94%</td>
+                        <td><span class="badge bg-success">Normal</span></td>
+                        <td>Evening</td>
+                        <td><a href="#">Add note</a></td>
+                    </tr>
+                    <tr>
+                        <td>Nov 2, 2024</td>
+                        <td>Blood Pressure</td>
+                        <td>130/80 mmHg</td>
+                        <td><span class="badge bg-success">Normal</span></td>
+                        <td>Morning</td>
+                        <td><a href="#">Add note</a></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+    </div>
 
-        <!-- Main content -->
-        <div class="col">
-            <h2 class="mb-4">Patient Pressure Analysis</h2>
-
-            <!-- Table of pressure checks -->
-            <div class="card mb-4">
-                <div class="card-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Date/Time</th>
-                                <th>Metric</th>
-                                <th>Value</th>
-                                <th>Risk Level</th>
-                                <th>Body area</th>
-                                <th>Comments</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var check in Model.PressureChecks)
-                            {
-                                <tr>
-                                    <td>@check.CheckTime</td>
-                                    <td>@check.MetricName</td>
-                                    <td>@check.Value</td>
-                                    <td>@check.RiskLevel</td>
-                                    <td>@check.BodyArea</td>
-                                    <td>@check.Notes</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Graph placeholder -->
-            <div class="card">
-                <div class="card-body">
-                    <h5>Pressure Metrics Over Time</h5>
-                    <p class="text-muted">
-                        This section can later show a chart of pressure over the last hours
-                        (using the same CSV/pressure data). For now it is a placeholder.
-                    </p>
-                    <div class="border rounded p-5 text-center">
-                        [ Chart placeholder ]
-                    </div>
-                </div>
+    <div class="card gt-card">
+        <div class="card-body">
+            <h5 class="mb-3">Pressure Metrics Over Time</h5>
+            <div class="chart-placeholder">
+                Simple chart placeholder for:
+                <ul class="mb-0">
+                    <li>Peak Pressure Index</li>
+                    <li>Contact Area %</li>
+                    <li>Overall Risk Score</li>
+                </ul>
             </div>
         </div>
     </div>

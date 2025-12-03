@@ -1,30 +1,40 @@
 ﻿@{
-    var active = ViewData["ActiveSection"] as string ?? "";
+    // Used to highlight current page
+    var active = ViewBag.ActivePage as string ?? "";
 }
 
-<div class="d-flex flex-column align-items-center pt-4 pb-4"
-     style="width:70px; background-color:#ffffff; border-radius:16px;">
-    <a asp-controller="Patient" asp-action="Index"
-       class="mb-4 btn btn-light @(active == "Dashboard" ? "border border-dark" : "")"
-       title="Dashboard">
-        ⬛
-    </a>
+<div class="sidebar-inner">
+    <div class="sidebar-logo mb-4">
+        <span class="sidebar-logo-icon">🩺</span>
+    </div>
 
-    <a asp-controller="Patient" asp-action="PressureAnalysis"
-       class="mb-4 btn btn-light @(active == "Analysis" ? "border border-dark" : "")"
-       title="Pressure analysis">
-        🕒
-    </a>
+    <nav class="sidebar-nav">
+        <a asp-controller="Patient" asp-action="Index"
+           class="sidebar-item @(active == "Dashboard" ? "active" : "")"
+           title="Dashboard">
+            <span>☷</span>
+        </a>
 
-    <a asp-controller="Patient" asp-action="ReviewClinician"
-       class="mb-4 btn btn-light @(active == "Comments" ? "border border-dark" : "")"
-       title="Comments">
-        💬
-    </a>
+        <a asp-controller="Patient" asp-action="PressureAnalysis"
+           class="sidebar-item @(active == "Analysis" ? "active" : "")"
+           title="Pressure analysis">
+            <span>⏱</span>
+        </a>
 
-    <a asp-controller="Patient" asp-action="Alerts"
-       class="mb-4 btn btn-light @(active == "Alerts" ? "border border-dark" : "")"
-       title="Alerts">
-        🔔
-    </a>
+        <a asp-controller="Patient" asp-action="ReviewClinician"
+           class="sidebar-item @(active == "Comments" ? "active" : "")"
+           title="Comments / review">
+            <span>💬</span>
+        </a>
+
+        <a asp-controller="Patient" asp-action="Alerts"
+           class="sidebar-item @(active == "Alerts" ? "active" : "")"
+           title="Alerts">
+            <span>⚠️</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <span class="sidebar-help">?</span>
+    </div>
 </div>

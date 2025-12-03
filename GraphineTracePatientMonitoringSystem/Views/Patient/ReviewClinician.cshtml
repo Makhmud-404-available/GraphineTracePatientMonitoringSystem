@@ -1,58 +1,52 @@
-﻿@model GraphineTracePatientMonitoringSystem.Models.ReviewClinicianViewModel
-@await Html.PartialAsync("_PatientSidebar")
-@{
-    ViewData["Title"] = "Review your clinician";
+﻿@{
+    ViewData["Title"] = "Comments";
 }
 
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-3 mb-3">
-            @await Html.PartialAsync("_PatientSidebar")
-        </div>
+<div class="gt-frame">
+    <h2 class="page-title">Comments</h2>
 
-        <div class="col-md-9">
-            <h2>Review your clinician</h2>
-            <p class="text-muted">
-                Please rate the clinician who checked you and leave any comments.
-            </p>
+    <div class="card gt-card">
+        <div class="card-body">
+            <h5 class="mb-3">Doctor Feedback &amp; Recommendations</h5>
 
-            <form asp-action="ReviewClinician" method="post">
-                @Html.AntiForgeryToken()
+            <div class="mb-3">
+                <label class="form-label">Patient review</label>
+                <textarea class="form-control" rows="3"
+                          placeholder="Enter the feedback to the recent patient's high risk ulcers alert"></textarea>
+            </div>
 
-                <input type="hidden" asp-for="PatientId" />
-                <input type="hidden" asp-for="ClinicianId" />
+            <div class="mb-3">
+                <label class="form-label">Recommendations</label>
+                <textarea class="form-control" rows="3"
+                          placeholder="Add recommendations for the patient (e.g., medication adjustments, lifestyle changes, follow-up schedule)..."></textarea>
+            </div>
 
-                <div class="mb-3">
-                    <label asp-for="ClinicianName" class="form-label"></label>
-                    <input asp-for="ClinicianName" class="form-control" readonly />
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Rating" class="form-label"></label>
-                    <select asp-for="Rating" class="form-select">
-                        <option value="1">1 - Very poor</option>
-                        <option value="2">2 - Poor</option>
-                        <option value="3">3 - OK</option>
-                        <option value="4">4 - Good</option>
-                        <option value="5">5 - Excellent</option>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Priority level</label>
+                    <select class="form-select">
+                        <option>Select priority</option>
+                        <option>Low</option>
+                        <option>Medium</option>
+                        <option>High</option>
                     </select>
-                    <span asp-validation-for="Rating" class="text-danger"></span>
                 </div>
-
-                <div class="mb-3">
-                    <label asp-for="Comment" class="form-label"></label>
-                    <textarea asp-for="Comment" class="form-control" rows="4"></textarea>
-                    <span asp-validation-for="Comment" class="text-danger"></span>
+                <div class="col-md-6">
+                    <label class="form-label">Follow-up required</label>
+                    <select class="form-select">
+                        <option>Select timeframe</option>
+                        <option>In 24 hours</option>
+                        <option>In 3 days</option>
+                        <option>In 1 week</option>
+                    </select>
                 </div>
+            </div>
 
-                <button type="submit" class="btn btn-primary">Save review</button>
-            </form>
+            <div class="d-flex gap-2">
+                <button class="btn btn-success">Submit feedback</button>
+                <button class="btn btn-outline-secondary">Save as draft</button>
+                <button class="btn btn-outline-danger">Cancel</button>
+            </div>
         </div>
     </div>
 </div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
