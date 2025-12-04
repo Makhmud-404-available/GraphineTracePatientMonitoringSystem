@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using GraphineTracePatientMonitoringSystem.Models;
-using System;
 
 namespace GraphineTracePatientMonitoringSystem.Controllers
 {
+    // Simple controller for the clinician-facing patient dashboard
     public class PatientController : Controller
     {
         // GET: /Patient/Index
+        // Main dashboard page with heat map and metrics
         public IActionResult Index()
         {
             ViewBag.ActivePage = "Dashboard";
@@ -29,6 +32,7 @@ namespace GraphineTracePatientMonitoringSystem.Controllers
                     int value = random.Next(1, 256); // 1 to 255
                     model.HeatMapValues[row, col] = value;
 
+                    // track max pressure
                     if (value > maxValue)
                     {
                         maxValue = value;
@@ -51,7 +55,7 @@ namespace GraphineTracePatientMonitoringSystem.Controllers
             double percent = contactCells / (double)totalCells * 100.0;
             model.ContactAreaPercent = Math.Round(percent, 1);
 
-            // Simple rule for alert
+            // Simple rule for alert banner
             if (maxValue >= 180)
             {
                 model.HasHighPressureAlert = true;
@@ -66,13 +70,55 @@ namespace GraphineTracePatientMonitoringSystem.Controllers
             return View(model);
         }
 
+        // GET: /Patient/PressureAnalysis
+        // Simple analysis page with a list of readings
         public IActionResult PressureAnalysis()
         {
             ViewBag.ActivePage = "Analysis";
             ViewData["Title"] = "Patient Pressure Analysis";
-            return View();
+
+            // Fake data for now (normally this would come from a database)
+            var readings = new List<PressureReading>
+            {
+                new PressureReading
+                {
+                    DateTime = DateTime.Today.AddHours(9),
+                    MetricName = "Peak Pressure Index",
+                    Value = "8.7",
+                    RiskLevel = "High",
+                    BodyArea = "Lower back"
+                },
+                new PressureReading
+                {
+                    DateTime = DateTime.Today.AddHours(8),
+                    MetricName = "Contact Area %",
+                    Value = "67.3%",
+                    RiskLevel = "Moderate",
+                    BodyArea = "Right hip"
+                },
+                new PressureReading
+                {
+                    DateTime = DateTime.Today.AddDays(-1).AddHours(20),
+                    MetricName = "Peak Pressure Index",
+                    Value = "6.2",
+                    RiskLevel = "Moderate",
+                    BodyArea = "Left heel"
+                },
+                new PressureReading
+                {
+                    DateTime = DateTime.Today.AddDays(-1).AddHours(10),
+                    MetricName = "Contact Area %",
+                    Value = "45.1%",
+                    RiskLevel = "Low",
+                    BodyArea = "Shoulders"
+                }
+            };
+
+            return View(readings);
         }
 
+        // GET: /Patient/ReviewClinician
+        // Comments / review page (form is mostly static for now)
         public IActionResult ReviewClinician()
         {
             ViewBag.ActivePage = "Comments";
@@ -80,11 +126,40 @@ namespace GraphineTracePatientMonitoringSystem.Controllers
             return View();
         }
 
+        // GET: /Patient/Alerts
+        // Alerts page with a small list of alerts
         public IActionResult Alerts()
         {
             ViewBag.ActivePage = "Alerts";
             ViewData["Title"] = "Alerts";
-            return View();
+
+            // Fake alerts list
+            var alerts = new List<Alert>
+            {
+                new Alert
+                {
+                    Time = DateTime.Today.AddHours(10).AddMinutes(12),
+                    Title = "High blood pressure detected",
+                    Message = "Please take BP reading now.",
+                    Severity = "High"
+                },
+                new Alert
+                {
+                    Time = DateTime.Today.AddHours(9).AddMinutes(30),
+                    Title = "No movement detected for 3 hours",
+                    Message = "Please adjust your position.",
+                    Severity = "Medium"
+                },
+                new Alert
+                {
+                    Time = DateTime.Today.AddHours(6),
+                    Title = "Pressure returned to safe range",
+                    Message = "Monitoring continues.",
+                    Severity = "Normal"
+                }
+            };
+
+            return View(alerts);
         }
     }
 }

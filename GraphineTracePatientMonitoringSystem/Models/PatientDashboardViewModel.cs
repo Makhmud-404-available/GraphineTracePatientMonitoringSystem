@@ -2,7 +2,7 @@
 
 namespace GraphineTracePatientMonitoringSystem.Models
 {
-    // Simple view model for the main patient dashboard
+    // View model for the main patient dashboard page
     public class PatientDashboardViewModel
     {
         // 32x32 heat map values (1–255)

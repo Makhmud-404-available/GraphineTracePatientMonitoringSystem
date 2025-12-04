@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<GraphineTracePatientMonitoringSystem.Models.Alert>
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Alerts";
 }
@@ -13,36 +15,36 @@
 
     <div class="card gt-card">
         <div class="card-body">
-
             <h5 class="mb-3">Recent Alerts</h5>
 
-            <div class="alert-card alert-high mb-2">
-                <div class="alert-icon">⚠️</div>
-                <div class="alert-content">
-                    <div class="alert-time">Nov 4, 10:12 AM</div>
-                    <div class="alert-title">High blood pressure detected</div>
-                    <div class="alert-text">Please take BP reading now.</div>
-                </div>
-            </div>
+            @foreach (var alert in Model)
+            {
+                string cardClass = "alert-normal";
+                if (alert.Severity.ToLower() == "high") cardClass = "alert-high";
+                else if (alert.Severity.ToLower() == "medium") cardClass = "alert-medium";
 
-            <div class="alert-card alert-medium mb-2">
-                <div class="alert-icon">⏱</div>
-                <div class="alert-content">
-                    <div class="alert-time">Nov 3, 9:30 PM</div>
-                    <div class="alert-title">No movement detected for 3 hours</div>
-                    <div class="alert-text">Please adjust your position.</div>
+                <div class="alert-card @cardClass mb-2">
+                    <div class="alert-icon">
+                        @if (alert.Severity.ToLower() == "high")
+                        {
+                            @:⚠️
+                        }
+                        else if (alert.Severity.ToLower() == "medium")
+                        {
+                            @:⏱
+                        }
+                        else
+                        {
+                            @:✅
+                        }
+                    </div>
+                    <div class="alert-content">
+                        <div class="alert-time">@alert.Time.ToString("dd MMM yyyy HH:mm")</div>
+                        <div class="alert-title">@alert.Title</div>
+                        <div class="alert-text">@alert.Message</div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="alert-card alert-normal">
-                <div class="alert-icon">✅</div>
-                <div class="alert-content">
-                    <div class="alert-time">Nov 3, 6:00 PM</div>
-                    <div class="alert-title">Pressure returned to safe range</div>
-                    <div class="alert-text">Monitoring continues.</div>
-                </div>
-            </div>
-
+            }
         </div>
     </div>
 </div>

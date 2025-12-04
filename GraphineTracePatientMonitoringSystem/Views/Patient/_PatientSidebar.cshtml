@@ -1,40 +1,46 @@
 ﻿@{
-    // Used to highlight current page
+    // which page is active (set in PatientController)
     var active = ViewBag.ActivePage as string ?? "";
 }
 
-<div class="sidebar-inner">
-    <div class="sidebar-logo mb-4">
-        <span class="sidebar-logo-icon">🩺</span>
+<div class="gt-sidebar">
+    <div class="gt-sidebar-top">
+        <div class="gt-logo-circle">
+            GT
+        </div>
     </div>
 
-    <nav class="sidebar-nav">
-        <a asp-controller="Patient" asp-action="Index"
+    <nav class="gt-sidebar-nav">
+        <!-- Dashboard -->
+        <a asp-controller="Patient"
+           asp-action="Index"
            class="sidebar-item @(active == "Dashboard" ? "active" : "")"
            title="Dashboard">
             <span>☷</span>
         </a>
 
-        <a asp-controller="Patient" asp-action="PressureAnalysis"
+        <!-- Pressure analysis -->
+        <a asp-controller="Patient"
+           asp-action="PressureAnalysis"
            class="sidebar-item @(active == "Analysis" ? "active" : "")"
            title="Pressure analysis">
             <span>⏱</span>
         </a>
 
-        <a asp-controller="Patient" asp-action="ReviewClinician"
+        <!-- Comments / clinician review -->
+        <a asp-controller="Patient"
+           asp-action="ReviewClinician"
            class="sidebar-item @(active == "Comments" ? "active" : "")"
-           title="Comments / review">
+           title="Comments">
             <span>💬</span>
         </a>
 
-        <a asp-controller="Patient" asp-action="Alerts"
+        <!-- Alerts -->
+        <a asp-controller="Patient"
+           asp-action="Alerts"
            class="sidebar-item @(active == "Alerts" ? "active" : "")"
            title="Alerts">
             <span>⚠️</span>
         </a>
     </nav>
-
-    <div class="sidebar-bottom">
-        <span class="sidebar-help">?</span>
-    </div>
 </div>

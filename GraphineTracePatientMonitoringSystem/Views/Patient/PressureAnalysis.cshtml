@@ -1,4 +1,7 @@
-﻿@{
+﻿@model List<GraphineTracePatientMonitoringSystem.Models.PressureReading>
+
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Patient Pressure Analysis";
 }
@@ -11,55 +14,30 @@
             <table class="table table-sm align-middle">
                 <thead>
                     <tr>
-                        <th>Date/Time</th>
+                        <th>Date / Time</th>
                         <th>Metric</th>
                         <th>Value</th>
                         <th>Risk Level</th>
-                        <th>Body area</th>
-                        <th>Comments</th>
+                        <th>Body Area</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Nov 4, 2024</td>
-                        <td>Blood Pressure</td>
-                        <td>145/95 mmHg</td>
-                        <td><span class="badge bg-danger">High</span></td>
-                        <td>Morning</td>
-                        <td><a href="#">Add note</a></td>
-                    </tr>
-                    <tr>
-                        <td>Nov 4, 2024</td>
-                        <td>Heart Rate</td>
-                        <td>88 bpm</td>
-                        <td><span class="badge bg-warning text-dark">Elevated</span></td>
-                        <td>Morning</td>
-                        <td><a href="#">Add note</a></td>
-                    </tr>
-                    <tr>
-                        <td>Nov 3, 2024</td>
-                        <td>Blood Pressure</td>
-                        <td>138/88 mmHg</td>
-                        <td><span class="badge bg-danger">High</span></td>
-                        <td>Evening</td>
-                        <td><a href="#">Add note</a></td>
-                    </tr>
-                    <tr>
-                        <td>Nov 3, 2024</td>
-                        <td>Oxygen Level</td>
-                        <td>94%</td>
-                        <td><span class="badge bg-success">Normal</span></td>
-                        <td>Evening</td>
-                        <td><a href="#">Add note</a></td>
-                    </tr>
-                    <tr>
-                        <td>Nov 2, 2024</td>
-                        <td>Blood Pressure</td>
-                        <td>130/80 mmHg</td>
-                        <td><span class="badge bg-success">Normal</span></td>
-                        <td>Morning</td>
-                        <td><a href="#">Add note</a></td>
-                    </tr>
+                    @foreach (var row in Model)
+                    {
+                        string badgeClass = "bg-success";
+                        if (row.RiskLevel.ToLower() == "high") badgeClass = "bg-danger";
+                        else if (row.RiskLevel.ToLower() == "moderate") badgeClass = "bg-warning text-dark";
+
+                        <tr>
+                            <td>@row.DateTime.ToString("dd MMM yyyy HH:mm")</td>
+                            <td>@row.MetricName</td>
+                            <td>@row.Value</td>
+                            <td>
+                                <span class="badge @badgeClass">@row.RiskLevel</span>
+                            </td>
+                            <td>@row.BodyArea</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
@@ -79,4 +57,3 @@
         </div>
     </div>
 </div>
-<h2 style="color:red">TEST: Pressure Analysis view loaded</h2>
