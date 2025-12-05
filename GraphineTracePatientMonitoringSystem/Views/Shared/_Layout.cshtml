@@ -1,6 +1,6 @@
 ﻿@*
     Shared layout for the whole site.
-    Left sidebar + main content area.
+    Sidebar + main content area.
 *@
 <!DOCTYPE html>
 <html lang="en">
@@ -17,9 +17,7 @@
     <div class="gt-page">
 
         <!-- Left sidebar -->
-        <aside class="gt-sidebar">
-            @await Html.PartialAsync("~/Views/Patient/_PatientSidebar.cshtml")
-        </aside>
+        @await Html.PartialAsync("~/Views/Patient/_PatientSidebar.cshtml")
 
         <!-- Main content -->
         <main role="main" class="gt-main">

@@ -283,3 +283,30 @@ body {
 .alert-normal {
     background-color: #dcfce7;
 }
+
+.sidebar-nav {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    margin-bottom: 24px; all
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #4b5563;
+    background-color: transparent;
+}
+
+    .sidebar-icon.active {
+        background-color: #111827;
+        color: #ffffff;
+    }

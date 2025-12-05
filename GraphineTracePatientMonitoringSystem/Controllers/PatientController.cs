@@ -5,19 +5,15 @@ using GraphineTracePatientMonitoringSystem.Models;
 
 namespace GraphineTracePatientMonitoringSystem.Controllers
 {
-    // Simple controller for the clinician-facing patient dashboard
     public class PatientController : Controller
     {
         // GET: /Patient/Index
-        // Main dashboard page with heat map and metrics
         public IActionResult Index()
         {
             ViewBag.ActivePage = "Dashboard";
             ViewData["Title"] = "Patient Dashboard";
 
-            // Create a simple model and fill heat map with random data
             var model = new PatientDashboardViewModel();
-
             var random = new Random();
 
             int maxValue = 0;
@@ -32,13 +28,11 @@ namespace GraphineTracePatientMonitoringSystem.Controllers
                     int value = random.Next(1, 256); // 1 to 255
                     model.HeatMapValues[row, col] = value;
 
-                    // track max pressure
                     if (value > maxValue)
                     {
                         maxValue = value;
                     }
 
-                    // count “contact area” as cells above a simple threshold
                     if (value >= 100)
                     {
                         contactCells++;
@@ -47,15 +41,11 @@ namespace GraphineTracePatientMonitoringSystem.Controllers
             }
 
             model.MaxPressureValue = maxValue;
-
-            // Very simple formula for Peak Pressure Index (0–10 scale)
             model.PeakPressureIndex = Math.Round(maxValue / 255.0 * 10.0, 1);
 
-            // Contact Area % (cells above 100)
             double percent = contactCells / (double)totalCells * 100.0;
             model.ContactAreaPercent = Math.Round(percent, 1);
 
-            // Simple rule for alert banner
             if (maxValue >= 180)
             {
                 model.HasHighPressureAlert = true;
@@ -71,13 +61,11 @@ namespace GraphineTracePatientMonitoringSystem.Controllers
         }
 
         // GET: /Patient/PressureAnalysis
-        // Simple analysis page with a list of readings
         public IActionResult PressureAnalysis()
         {
             ViewBag.ActivePage = "Analysis";
             ViewData["Title"] = "Patient Pressure Analysis";
 
-            // Fake data for now (normally this would come from a database)
             var readings = new List<PressureReading>
             {
                 new PressureReading
@@ -118,7 +106,6 @@ namespace GraphineTracePatientMonitoringSystem.Controllers
         }
 
         // GET: /Patient/ReviewClinician
-        // Comments / review page (form is mostly static for now)
         public IActionResult ReviewClinician()
         {
             ViewBag.ActivePage = "Comments";
@@ -127,13 +114,11 @@ namespace GraphineTracePatientMonitoringSystem.Controllers
         }
 
         // GET: /Patient/Alerts
-        // Alerts page with a small list of alerts
         public IActionResult Alerts()
         {
             ViewBag.ActivePage = "Alerts";
             ViewData["Title"] = "Alerts";
 
-            // Fake alerts list
             var alerts = new List<Alert>
             {
                 new Alert

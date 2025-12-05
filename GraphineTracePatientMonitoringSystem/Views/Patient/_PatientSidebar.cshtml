@@ -1,46 +1,39 @@
 ﻿@{
-    // which page is active (set in PatientController)
     var active = ViewBag.ActivePage as string ?? "";
 }
 
-<div class="gt-sidebar">
-    <div class="gt-sidebar-top">
-        <div class="gt-logo-circle">
-            GT
-        </div>
+<aside class="gt-sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-circle">GT</div>
     </div>
 
-    <nav class="gt-sidebar-nav">
+    <nav class="sidebar-nav">
         <!-- Dashboard -->
-        <a asp-controller="Patient"
-           asp-action="Index"
-           class="sidebar-item @(active == "Dashboard" ? "active" : "")"
+        <a href="@Url.Action("Index", "Patient")"
+           class="sidebar-icon @(active == "Dashboard" ? "active" : "")"
            title="Dashboard">
-            <span>☷</span>
+            <span>☰</span>
         </a>
 
         <!-- Pressure analysis -->
-        <a asp-controller="Patient"
-           asp-action="PressureAnalysis"
-           class="sidebar-item @(active == "Analysis" ? "active" : "")"
+        <a href="@Url.Action("PressureAnalysis", "Patient")"
+           class="sidebar-icon @(active == "Analysis" ? "active" : "")"
            title="Pressure analysis">
-            <span>⏱</span>
+            <span>📈</span>
         </a>
 
-        <!-- Comments / clinician review -->
-        <a asp-controller="Patient"
-           asp-action="ReviewClinician"
-           class="sidebar-item @(active == "Comments" ? "active" : "")"
+        <!-- Comments -->
+        <a href="@Url.Action("ReviewClinician", "Patient")"
+           class="sidebar-icon @(active == "Comments" ? "active" : "")"
            title="Comments">
             <span>💬</span>
         </a>
 
         <!-- Alerts -->
-        <a asp-controller="Patient"
-           asp-action="Alerts"
-           class="sidebar-item @(active == "Alerts" ? "active" : "")"
+        <a href="@Url.Action("Alerts", "Patient")"
+           class="sidebar-icon @(active == "Alerts" ? "active" : "")"
            title="Alerts">
             <span>⚠️</span>
         </a>
     </nav>
-</div>
+</aside>
