@@ -12,41 +12,39 @@
 
             <div class="mb-3">
                 <label class="form-label">Doctor’s latest review</label>
-                <textarea class="form-control" rows="3"
+                <textarea class="form-control" rows="3" readonly
                           placeholder="Your doctor’s summary about your current pressure-ulcer risk will appear here."></textarea>
+                <small class="text-muted">This text is shown to you and cannot be edited.</small>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">What my doctor recommends</label>
-                <textarea class="form-control" rows="3"
+                <textarea class="form-control" rows="3" readonly
                           placeholder="Example: change position every 2 hours, check skin on lower back and heels, drink more water…"></textarea>
+                <small class="text-muted">These are your doctor’s recommendations.</small>
             </div>
 
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label class="form-label">How urgent this is</label>
-                    <select class="form-select">
-                        <option>Select urgency</option>
-                        <option>Low – routine advice</option>
-                        <option>Medium – follow within a few days</option>
-                        <option>High – follow today</option>
+                    <select class="form-select" disabled>
+                        <option selected>Medium – follow within a few days</option>
                     </select>
+                    <small class="text-muted">Set by your doctor.</small>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Follow-up appointment</label>
-                    <select class="form-select">
-                        <option>Select follow-up</option>
-                        <option>No follow-up scheduled</option>
-                        <option>Within 1 week</option>
-                        <option>Within 1 month</option>
+                    <select class="form-select" disabled>
+                        <option selected>Within 1 week</option>
                     </select>
+                    <small class="text-muted">Next review date chosen by your doctor.</small>
                 </div>
             </div>
 
             <div class="d-flex gap-2">
-                <button class="btn btn-success">Mark as read</button>
-                <button class="btn btn-outline-secondary">Save for later</button>
-                <button class="btn btn-outline-danger">Cancel</button>
+                <button class="btn btn-success" disabled>Mark as read (not active in prototype)</button>
+                <button class="btn btn-outline-secondary" disabled>Save for later (not active)</button>
+                <button class="btn btn-outline-danger" disabled>Cancel</button>
             </div>
         </div>
     </div>
